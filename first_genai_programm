@@ -1,0 +1,29 @@
+from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
+
+load_dotenv()
+
+#Step 1: Create a Prompt Template
+
+template=""" Given the Below Text by user, Generate 5 Point Summary
+{question}
+"""
+prompt=ChatPromptTemplate.from_template(template)
+
+#Step 2: Setting up your Model
+
+#model=ChatOllama(temperature=0,model="llama3.2")
+model=ChatOpenAI(temperature=0,model="gpt-4")
+
+
+#Step 3:Create a chain
+
+chain=prompt | model
+
+#Step 4: Run the Model
+
+response=chain.invoke({"question":"Large Language Models (LLMs) are advanced AI systems trained on vast datasets of text to understand and generate human-like language. Utilizing deep learning architectures, especially transformer networks, they learn linguistic patterns, grammar, context, and even nuanced meanings. LLMs process vast amounts of data, often drawn from books, articles, and websites, to predict and generate coherent text based on input prompts. These models are capable of answering questions, summarizing content, and even simulating dialogue. LLM development emphasizes balancing model size and efficiency, as the volume and diversity of data significantly influence the model's language proficiency and contextual accuracy."})
+print(response.content)
+
